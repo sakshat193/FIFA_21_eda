@@ -10,6 +10,38 @@ plt.style.use('dark_background')
 # Set page configuration
 st.set_page_config(page_title="FIFA 21 Data Analysis", layout="wide")
 
+st.markdown(
+    """
+    <style>
+    /* Primary background color */
+    .css-1d391kg { 
+        background-color: #000000;
+    }
+
+    /* Secondary background color */
+    .css-1avcm0n, .css-1siy2j7 { 
+        background-color: #171717;
+    }
+
+    /* Text color */
+    .css-145kmo2, .css-10trblm {
+        color: #ffffff;
+    }
+
+    /* Sidebar background color */
+    .css-1d391kg .css-1r6slb0 {
+        background-color: #171717;
+    }
+
+    /* Widget background color */
+    .css-1avcm0n .css-1e5imcs, .css-1siy2j7 .css-1e5imcs {
+        background-color: #171717;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Load data
 @st.cache_data
 def load_data():
