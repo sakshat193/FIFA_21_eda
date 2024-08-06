@@ -89,10 +89,6 @@ The application uses the FIFA 21 dataset, which should be named `data.csv` and p
 
 Contributions to improve the analysis or add new features are welcome. Please feel free to submit a pull request or open an issue to discuss potential changes.
 
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
 ## Acknowledgments
 
 - Data source: [FIFA 21 Complete Player Dataset](https://www.kaggle.com/datasets/stefanoleone992/fifa-21-complete-player-dataset) on Kaggle
