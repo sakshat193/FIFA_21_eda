@@ -120,16 +120,25 @@ analysis_option = st.sidebar.selectbox("Choose Analysis Type",
 # Age Distribution Analysis
 if analysis_option == "Age Distribution":
     st.title("Age Distribution of Players")
+    st.write("This plot shows the distribution of player ages in FIFA 21.")
+    
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.histplot(df_cleaned['age'], bins=range(15, 60, 5), kde=True, ax=ax)
     ax.set_title('Age Distribution of Players')
     ax.set_xlabel('Age')
     ax.set_ylabel('Count')
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- The age distribution appears to be roughly normal, with a peak around the mid-20s.")
+    st.write("- There are fewer very young (< 20) and older (> 35) players in the dataset.")
+    st.write("- This distribution reflects the typical career span of professional footballers.")
 
 # Age vs Player Positions Analysis
 elif analysis_option == "Age vs Player Positions":
     st.title("Age vs Player Positions")
+    st.write("This plot compares the average age across different player positions.")
+    
     position_mapping = {
         'RWB': 'RB', 'LWB': 'LB',
         'RM': 'CM', 'LM': 'CM'
@@ -143,10 +152,17 @@ elif analysis_option == "Age vs Player Positions":
     ax.set_xlabel('Average Age')
     ax.set_ylabel('Player Position')
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- Goalkeepers tend to have the highest average age, likely due to the position's less physical nature and emphasis on experience.")
+    st.write("- Forwards and wingers generally have lower average ages, possibly due to the high physical demands of these positions.")
+    st.write("- Defensive positions (CB, FB) tend to have slightly higher average ages, perhaps due to the importance of experience in reading the game.")
 
 # Value_EUR vs Player Positions Analysis
 elif analysis_option == "Value EUR vs Player Positions":
     st.title("Value EUR vs Player Positions")
+    st.write("This plot shows the average player value for each primary position.")
+    
     position_value = df_cleaned.groupby('primary_position')['value_eur'].mean().sort_values(ascending=False).reset_index()
 
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -155,20 +171,34 @@ elif analysis_option == "Value EUR vs Player Positions":
     ax.set_xlabel('Average Value (EUR)')
     ax.set_ylabel('Player Position')
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- Forwards tend to have the highest average value, likely due to their direct impact on scoring goals.")
+    st.write("- Midfielders, especially attacking midfielders, also have high average values, reflecting their importance in both attack and defense.")
+    st.write("- Goalkeepers generally have lower average values, possibly due to the specialized nature of the position and fewer transfers.")
 
 # Value_EUR vs Release Clause Analysis
 elif analysis_option == "Value EUR vs Release Clause":
     st.title("Value EUR vs Release Clause")
+    st.write("This scatter plot compares player values to their release clauses.")
+    
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.scatterplot(x='value_eur', y='release_clause_eur', data=df_cleaned, ax=ax)
     ax.set_title("Player Value (EUR) vs Release Clause (EUR)")
     ax.set_xlabel("Player Value (EUR)")
     ax.set_ylabel("Release Clause (EUR)")
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- There's a strong positive correlation between player value and release clause.")
+    st.write("- Release clauses are generally set higher than the player's current market value to protect clubs from losing valuable players.")
+    st.write("- Some outliers exist where release clauses are significantly higher than player values, possibly for star players or young prospects.")
 
 # Value_EUR vs Top 7 Performances Analysis
 elif analysis_option == "Value EUR vs Top 7 Performances":
     st.title("Value EUR vs Top 7 Performances")
+    st.write("This plot compares the top 7 players' skills and values.")
+    
     top_players = df_cleaned.nsmallest(7, 'league_rank')
     skills = ['goalkeeping', 'defending', 'movement', 'attacking']
 
@@ -195,10 +225,17 @@ elif analysis_option == "Value EUR vs Top 7 Performances":
     plt.title('Top 7 Players by League Rank, Skills, and Value')
     plt.tight_layout()
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- The top players tend to have high scores across multiple skill categories.")
+    st.write("- There's generally a positive relationship between skill levels and player value.")
+    st.write("- Some players may have exceptionally high values despite not having the highest skill scores, possibly due to factors like age, potential, or marketability.")
 
 # Value_EUR vs Skills Analysis
 elif analysis_option == "Value EUR vs Skills":
     st.title("Value EUR vs Skills")
+    st.write("These scatter plots show the relationship between player value and various skill categories.")
+    
     skills = ['goalkeeping', 'defending', 'movement', 'attacking']
     fig, axes = plt.subplots(2, 2, figsize=(12, 10))
     axes = axes.flatten()
@@ -215,10 +252,17 @@ elif analysis_option == "Value EUR vs Skills":
 
     plt.tight_layout()
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- All skill categories show a positive correlation with player value.")
+    st.write("- Attacking skills tend to have the strongest correlation with player value, reflecting the premium placed on goal-scoring abilities.")
+    st.write("- Goalkeeping skills show the weakest correlation, possibly due to the specialized nature of the position and different valuation criteria.")
 
 # Correlation Analysis
 elif analysis_option == "Correlation Analysis":
     st.title("Correlation Analysis")
+    st.write("This heatmap shows the correlations between various player attributes and their market value.")
+    
     corr_columns = ['age', 'bmi', 'overall', 'potential', 'international_reputation', 
                     'goalkeeping', 'defending', 'movement', 'attacking']
     corr_matrix = df_cleaned[corr_columns + ['value_eur']].corr()['value_eur'].sort_values(ascending=False)
@@ -229,20 +273,35 @@ elif analysis_option == "Correlation Analysis":
     sns.heatmap(df_cleaned[corr_columns + ['value_eur']].corr(), annot=True, cmap='coolwarm', vmin=-1, vmax=1, ax=ax)
     ax.set_title('Correlation Heatmap: Player Attributes vs Value')
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- 'Overall' rating has the strongest positive correlation with player value, as expected.")
+    st.write("- 'Potential' and 'International Reputation' also show strong positive correlations, indicating their importance in player valuation.")
+    st.write("- Age has a slight negative correlation with value, suggesting younger players with high potential are often valued more highly.")
 
 # Value Distribution
-elif analysis_option == "Value Distribution":
+if analysis_option == "Value Distribution":
     st.title("Value Distribution")
+    st.write("This histogram shows the distribution of player values in the FIFA 21 dataset.")
+    
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.histplot(df_cleaned['value_eur'], kde=True, bins=50, ax=ax)
     ax.set_title('Distribution of Player Values')
     ax.set_xlabel('Player Value (EUR)')
     ax.set_ylabel('Count')
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- The distribution of player values is highly skewed to the right, indicating that a small number of players have exceptionally high values.")
+    st.write("- The majority of players are clustered at lower values, forming the base of the distribution.")
+    st.write("- This skewed distribution reflects the reality of the football market, where top players command significantly higher values than the average player.")
+    st.write("- The long tail of the distribution represents the elite players who are valued much higher than the rest, likely due to their exceptional skills, popularity, or potential.")
 
 # Value by League Analysis
 elif analysis_option == "Value by League":
     st.title("Value by League")
+    st.write("This bar plot shows the top 10 leagues by average player value in FIFA 21.")
+    
     league_values = df_cleaned.groupby('league_name')['value_eur'].agg(['mean', 'median', 'count']).sort_values('mean', ascending=False).head(10)
 
     fig, ax = plt.subplots(figsize=(12, 6))
@@ -250,5 +309,12 @@ elif analysis_option == "Value by League":
     ax.set_title('Top 10 Leagues by Average Player Value')
     ax.set_xlabel('League')
     ax.set_ylabel('Average Player Value (EUR)')
-    ax.set_xticklabels(league_values.index, rotation=45, ha='right')
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha='right')
     st.pyplot(fig)
+    
+    st.subheader("Insights:")
+    st.write("- The English Premier League has the highest average player value, reflecting its financial power and global popularity.")
+    st.write("- The top 5 European leagues (England, Spain, Germany, Italy, France) dominate the list, showcasing the concentration of talent and resources in these competitions.")
+    st.write("- There's a significant drop-off in average player value after the top few leagues, highlighting the financial disparities in global football.")
+    st.write("- Leagues from smaller countries or with less global exposure tend to have lower average player values, despite potentially having high-quality players.")
+    st.write("- This analysis provides insights into the economic landscape of global football and the relative financial strength of different leagues.")
